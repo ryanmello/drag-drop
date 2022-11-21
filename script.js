@@ -41,4 +41,26 @@ function createList(){
         listItems.push(listItem);
         draggable_list.appendChild(listItem);
     });
+
+    addEventListeners();
+}
+
+function dragStart()
+
+function addEventListeners(){
+    // individual items
+    const draggables = document.querySelectorAll('.draggable');
+    // each li item in the ul
+    const dragListItem = document.querySelectorAll('.draggable-list li');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', dragStart);
+    });
+
+    dragListItems.forEach(item => {
+        item.addEventListener('dragover', dragOver);
+        item.addEventListener('drop', dragDrop);
+        item.addEventListener('dragenter', dragEnter);
+        item.addEventListener('dragleave', drageLeave);
+    });
 }
