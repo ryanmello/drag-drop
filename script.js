@@ -45,22 +45,70 @@ function createList(){
     addEventListeners();
 }
 
-function dragStart()
+function dragStart(){
+    //console.log('Event: ', 'dragstart');
+    dragStartIndex = +this.closest('li').getAttribute('data-index');
+}
+
+function dragEnter(){
+    //console.log('Event: ', 'dragenter');
+    this.classList.add('over');
+}
+
+function dragLeave(){
+    //console.log('Event: ', 'dragleave');
+    this.classList.remove('over');
+}
+
+function dragOver(e){
+    //console.log('Event: ', 'dragover');
+    e.preventDefault();
+}
+
+function dragDrop(){
+    //console.log('Event: ', 'drop');
+    const dragEndIndex = +this.getAttribute('data-index');
+    swapItems(dragStartIndex, dragEndIndex);
+    this.classList.remove('over');
+}
+
+function swapItems(fromIndex, toIndex){
+    const item1 = listItems[fromIndex].querySelector('.draggable');
+    const item2 = listItems[toIndex].querySelector('.draggable');
+
+    listItems[fromIndex].appendChild(item2);
+    listItems[toIndex].appendChild(item1);
+}
+
+function checkOrder(){
+    listItems.forEach((listItem, index) => {
+        const personName = listItem.querySelector('.draggable').innerText.trim();
+
+        if(personName !== richestPeople[index]){
+            listItem.classList.add('wrong');
+        } else {
+            listItem.classList.remove('wrong');
+            listItem.classList.add('right');
+        }
+    });
+}
 
 function addEventListeners(){
     // individual items
     const draggables = document.querySelectorAll('.draggable');
     // each li item in the ul
-    const dragListItem = document.querySelectorAll('.draggable-list li');
+    const dragListItems = document.querySelectorAll('.draggable-list li');
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', dragStart);
-    });
+    })
 
     dragListItems.forEach(item => {
         item.addEventListener('dragover', dragOver);
         item.addEventListener('drop', dragDrop);
         item.addEventListener('dragenter', dragEnter);
-        item.addEventListener('dragleave', drageLeave);
-    });
+        item.addEventListener('dragleave', dragLeave);
+    })
 }
+
+check.addEventListener('click', checkOrder);
