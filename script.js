@@ -91,6 +91,23 @@ function checkOrder(){
             listItem.classList.add('right');
         }
     });
+    checkGame();
+}
+
+function checkGame(){
+    let totalCorrect = 0;
+
+    listItems.forEach((listItem, index) => {
+        const itemCheck = listItem.getAttribute('class');
+
+        if(itemCheck == 'right'){
+            totalCorrect++;
+        }
+    });
+
+    if(totalCorrect == 10){
+        console.log("Game Over!");
+    }
 }
 
 function addEventListeners(){
