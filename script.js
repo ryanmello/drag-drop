@@ -91,6 +91,7 @@ function checkOrder(){
             listItem.classList.add('right');
         }
     });
+
     checkGame();
 }
 
@@ -107,6 +108,12 @@ function checkGame(){
 
     if(totalCorrect == 10){
         console.log("Game Over!");
+        check.innerText = 'Winner!';
+
+        document.getElementById('my-canvas').style.zIndex = '10';
+        var confettiSettings = { target: 'my-canvas' };
+        var confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
     }
 }
 
@@ -129,3 +136,4 @@ function addEventListeners(){
 }
 
 check.addEventListener('click', checkOrder);
+
